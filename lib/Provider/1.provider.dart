@@ -11,21 +11,26 @@ class Provider {
   final _rep = dependency<PokemonsRepository>();
 
   Future getInfo() async {
-    _rep.pokemons = [];
-    final url = Uri.parse(_api);
-    http.Response response = await http.get(url);
-    var res = jsonDecode(response.body);
+    _rep.pokemons = await _rep.getPokemonsList();
+    if (_rep.pokemons.isEmpty) {
+      final url = Uri.parse(_api);
+      http.Response response = await http.get(url);
+      var res = jsonDecode(response.body);
 
-    for (var pk in res['results']) {
-      String n = pk['name'];
-      String buffer = n.substring(0, 1);
-      buffer = buffer.toUpperCase();
-      n = n.replaceRange(0, 1, buffer);
+      for (var pk in res['results']) {
+        String n = pk['name'];
+        String buffer = n.substring(0, 1);
+        buffer = buffer.toUpperCase();
+        n = n.replaceRange(0, 1, buffer);
 
-      _rep.pokemons.add(Pokemon(
-        name: n,
-        url: pk['url'],
-      ));
+        var pok = Pokemon(
+          name: n,
+          url: pk['url'],
+        );
+        _rep.addNewPokemon(pok);
+      }
+
+      _rep.pokemons = await _rep.getPokemonsList();
     }
 
     for (var pk in _rep.pokemons) {
