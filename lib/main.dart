@@ -1,16 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
 import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
-import 'package:flutter_pokemon_application_test/Drift%20DB/app_db.dart';
-import 'package:flutter_pokemon_application_test/Repository/repository.dart';
 
 import 'Widgets/1.main_widget.dart';
 
 void main() async {
-  InitGetIt();
+  initGetIt();
   runApp(const MyApp());
 }
 

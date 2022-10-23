@@ -1,8 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
-import 'package:flutter_pokemon_application_test/Drift%20DB/app_db.dart';
 import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
-import 'package:flutter_pokemon_application_test/Repository/repository.dart';
+import 'package:flutter_pokemon_application_test/Repository/1.repository.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

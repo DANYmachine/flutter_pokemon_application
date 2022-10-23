@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_application_test/Provider/1.provider.dart';
 import '../DI/1.dependencies.dart';

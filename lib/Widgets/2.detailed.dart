@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/2.event.dart';
@@ -48,7 +46,7 @@ class _DetailedPageState extends State<DetailedPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 150,
                     height: 150,
                     child: Image.network(
@@ -70,11 +68,32 @@ class _DetailedPageState extends State<DetailedPage> {
                       itemCount: state.pokemon.types.length,
                       itemBuilder: (context, index) {
                         return Center(
-                          child: Text('${state.pokemon.types[index]}'),
+                          child: Text(state.pokemon.types[index]),
                         );
                       },
                     ),
                   ),
+                ],
+              ),
+            );
+          }
+          if (state is DetailedErrorState) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Network error. Try again!'),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                    child: const Icon(
+                      Icons.refresh,
+                    ),
+                    onPressed: () {
+                      _bloc.add(DetailedEvent(pokemon: widget.pokemon));
+                    },
+                  )
                 ],
               ),
             );

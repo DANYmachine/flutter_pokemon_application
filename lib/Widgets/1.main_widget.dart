@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/2.event.dart';
 import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
-import 'package:flutter_pokemon_application_test/Repository/repository.dart';
+import 'package:flutter_pokemon_application_test/Repository/1.repository.dart';
 import 'package:flutter_pokemon_application_test/Widgets/2.detailed.dart';
 
 import '../BLoC/3.state.dart';
@@ -81,24 +81,22 @@ class _MainHomePageState extends State<MainHomePage> {
             }
             if (state is PokemonErrorState) {
               return Center(
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Network error. Try again!'),
-                      const SizedBox(
-                        height: 15,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Network error. Try again!'),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ElevatedButton(
+                      child: const Icon(
+                        Icons.refresh,
                       ),
-                      ElevatedButton(
-                        child: const Icon(
-                          Icons.refresh,
-                        ),
-                        onPressed: () {
-                          _bloc.add(PokemonInitEvent());
-                        },
-                      )
-                    ],
-                  ),
+                      onPressed: () {
+                        _bloc.add(PokemonInitEvent());
+                      },
+                    )
+                  ],
                 ),
               );
             }
