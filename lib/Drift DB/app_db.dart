@@ -15,7 +15,7 @@ part 'app_db.g.dart';
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(path.join(dbFolder.path, 'data.sqlite'));
+    final file = File(path.join(dbFolder.path, 'pokemons.sqlite'));
 
     return NativeDatabase(file);
   });

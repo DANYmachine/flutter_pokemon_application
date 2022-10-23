@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
+import 'package:flutter_pokemon_application_test/Drift%20DB/app_db.dart';
 import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
 import 'package:flutter_pokemon_application_test/Repository/repository.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,9 @@ class Provider {
 
   Future getInfo() async {
     _rep.pokemons = await _rep.getPokemonsList();
+
     if (_rep.pokemons.isEmpty) {
+      log('DB doesn' 't exist. Creating DB');
       final url = Uri.parse(_api);
       http.Response response = await http.get(url);
       var res = jsonDecode(response.body);
@@ -29,8 +32,6 @@ class Provider {
         );
         _rep.addNewPokemon(pok);
       }
-
-      _rep.pokemons = await _rep.getPokemonsList();
     }
 
     for (var pk in _rep.pokemons) {
