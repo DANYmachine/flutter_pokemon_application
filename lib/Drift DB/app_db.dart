@@ -15,7 +15,7 @@ part 'app_db.g.dart';
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(path.join(dbFolder.path, 'pokemons.sqlite'));
+    final file = File(path.join(dbFolder.path, 'test11.sqlite'));
 
     return NativeDatabase(file);
   });
@@ -39,6 +39,7 @@ class AppDb extends _$AppDb {
       list.add(Pokemon(
         name: note.name,
         url: note.url,
+        logoUri: note.logoUrl,
       ));
     }
     log('Count of DB pokemons: ${list.length}');

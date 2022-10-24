@@ -12,14 +12,19 @@ class PokemonsEntityData extends DataClass
   final int id;
   final String name;
   final String url;
+  final String logoUrl;
   const PokemonsEntityData(
-      {required this.id, required this.name, required this.url});
+      {required this.id,
+      required this.name,
+      required this.url,
+      required this.logoUrl});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['url'] = Variable<String>(url);
+    map['logo_url'] = Variable<String>(logoUrl);
     return map;
   }
 
@@ -28,6 +33,7 @@ class PokemonsEntityData extends DataClass
       id: Value(id),
       name: Value(name),
       url: Value(url),
+      logoUrl: Value(logoUrl),
     );
   }
 
@@ -38,6 +44,7 @@ class PokemonsEntityData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       url: serializer.fromJson<String>(json['url']),
+      logoUrl: serializer.fromJson<String>(json['logoUrl']),
     );
   }
   @override
@@ -47,69 +54,84 @@ class PokemonsEntityData extends DataClass
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'url': serializer.toJson<String>(url),
+      'logoUrl': serializer.toJson<String>(logoUrl),
     };
   }
 
-  PokemonsEntityData copyWith({int? id, String? name, String? url}) =>
+  PokemonsEntityData copyWith(
+          {int? id, String? name, String? url, String? logoUrl}) =>
       PokemonsEntityData(
         id: id ?? this.id,
         name: name ?? this.name,
         url: url ?? this.url,
+        logoUrl: logoUrl ?? this.logoUrl,
       );
   @override
   String toString() {
     return (StringBuffer('PokemonsEntityData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('url: $url')
+          ..write('url: $url, ')
+          ..write('logoUrl: $logoUrl')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, url);
+  int get hashCode => Object.hash(id, name, url, logoUrl);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is PokemonsEntityData &&
           other.id == this.id &&
           other.name == this.name &&
-          other.url == this.url);
+          other.url == this.url &&
+          other.logoUrl == this.logoUrl);
 }
 
 class PokemonsEntityCompanion extends UpdateCompanion<PokemonsEntityData> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> url;
+  final Value<String> logoUrl;
   const PokemonsEntityCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.url = const Value.absent(),
+    this.logoUrl = const Value.absent(),
   });
   PokemonsEntityCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required String url,
+    required String logoUrl,
   })  : name = Value(name),
-        url = Value(url);
+        url = Value(url),
+        logoUrl = Value(logoUrl);
   static Insertable<PokemonsEntityData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? url,
+    Expression<String>? logoUrl,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (url != null) 'url': url,
+      if (logoUrl != null) 'logo_url': logoUrl,
     });
   }
 
   PokemonsEntityCompanion copyWith(
-      {Value<int>? id, Value<String>? name, Value<String>? url}) {
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? url,
+      Value<String>? logoUrl}) {
     return PokemonsEntityCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       url: url ?? this.url,
+      logoUrl: logoUrl ?? this.logoUrl,
     );
   }
 
@@ -125,6 +147,9 @@ class PokemonsEntityCompanion extends UpdateCompanion<PokemonsEntityData> {
     if (url.present) {
       map['url'] = Variable<String>(url.value);
     }
+    if (logoUrl.present) {
+      map['logo_url'] = Variable<String>(logoUrl.value);
+    }
     return map;
   }
 
@@ -133,7 +158,8 @@ class PokemonsEntityCompanion extends UpdateCompanion<PokemonsEntityData> {
     return (StringBuffer('PokemonsEntityCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('url: $url')
+          ..write('url: $url, ')
+          ..write('logoUrl: $logoUrl')
           ..write(')'))
         .toString();
   }
@@ -162,8 +188,13 @@ class $PokemonsEntityTable extends PokemonsEntity
   late final GeneratedColumn<String> url = GeneratedColumn<String>(
       'url', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  final VerificationMeta _logoUrlMeta = const VerificationMeta('logoUrl');
   @override
-  List<GeneratedColumn> get $columns => [id, name, url];
+  late final GeneratedColumn<String> logoUrl = GeneratedColumn<String>(
+      'logo_url', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, url, logoUrl];
   @override
   String get aliasedName => _alias ?? 'pokemons_entity';
   @override
@@ -188,6 +219,12 @@ class $PokemonsEntityTable extends PokemonsEntity
     } else if (isInserting) {
       context.missing(_urlMeta);
     }
+    if (data.containsKey('logo_url')) {
+      context.handle(_logoUrlMeta,
+          logoUrl.isAcceptableOrUnknown(data['logo_url']!, _logoUrlMeta));
+    } else if (isInserting) {
+      context.missing(_logoUrlMeta);
+    }
     return context;
   }
 
@@ -203,6 +240,8 @@ class $PokemonsEntityTable extends PokemonsEntity
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       url: attachedDatabase.options.types
           .read(DriftSqlType.string, data['${effectivePrefix}url'])!,
+      logoUrl: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}logo_url'])!,
     );
   }
 

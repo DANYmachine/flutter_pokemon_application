@@ -4,9 +4,10 @@ import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/2.event.dart';
 import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
 import 'package:flutter_pokemon_application_test/Repository/1.repository.dart';
-import 'package:flutter_pokemon_application_test/Widgets/2.detailed.dart';
+import 'package:flutter_pokemon_application_test/Widgets/detailed_page.dart';
 
 import '../BLoC/3.state.dart';
+import 'pokemon_grid_widget.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
@@ -38,46 +39,11 @@ class _MainHomePageState extends State<MainHomePage> {
           builder: (context, state) {
             if (state is PokemonLoadingState) {
               return const CircularProgressIndicator(
-                color: Color.fromARGB(255, 250, 0, 146),
+                color: Colors.blueGrey,
               );
             }
             if (state is PokemonLoadedState) {
-              return ListView.builder(
-                itemCount: dependency<PokemonsRepository>().pokemons.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.all(15),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Center(
-                        child: ListTile(
-                          title: Text(
-                            dependency<PokemonsRepository>()
-                                .pokemons[index]
-                                .name
-                                .toString(),
-                            textAlign: TextAlign.center,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => BlocProvider(
-                                  create: (_) => dependency<PokemonBloc>(),
-                                  child: DetailedPage(
-                                    pokemon: dependency<PokemonsRepository>()
-                                        .pokemons[index],
-                                  ),
-                                ),
-                              ),
-                            ).then((value) => _bloc.add(PokemonInitEvent()));
-                          },
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
+              return const PokemonsGrid();
             }
             if (state is PokemonErrorState) {
               return Center(

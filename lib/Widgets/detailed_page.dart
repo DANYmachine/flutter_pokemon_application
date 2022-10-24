@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/2.event.dart';
+import 'package:flutter_pokemon_application_test/Widgets/detailed_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../BLoC/3.state.dart';
 import '../Model/1.pokemon.dart';
@@ -42,39 +44,8 @@ class _DetailedPageState extends State<DetailedPage> {
             );
           }
           if (state is DetailedLoadedState) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 150,
-                    height: 150,
-                    child: Image.network(
-                      '${state.pokemon.imgUri}',
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Text('Name:\t${state.pokemon.name}'),
-                  Text('Height:\t${state.pokemon.height}\tcm'),
-                  Text('Weight:\t${state.pokemon.weight}\tkg'),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const Text('Types:'),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 300,
-                    child: ListView.builder(
-                      itemCount: state.pokemon.types.length,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Text(state.pokemon.types[index]),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            return DetailedWidget(
+              pokemon: widget.pokemon,
             );
           }
           if (state is DetailedErrorState) {

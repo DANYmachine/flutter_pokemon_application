@@ -2,6 +2,7 @@ class Pokemon {
   String? name;
   String? url;
   String? imgUri;
+  String? logoUri;
   int? weight;
   int? height;
   List<String> types = [];
@@ -9,6 +10,7 @@ class Pokemon {
   Pokemon({
     this.name,
     this.url,
+    this.logoUri,
   });
 
   @override

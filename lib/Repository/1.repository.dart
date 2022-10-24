@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:drift/drift.dart' as drift;
+import 'package:flutter_pokemon_application_test/Helper/helper.dart';
 import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
 
 import '../DI/1.dependencies.dart';
@@ -15,6 +16,7 @@ class PokemonsRepository {
       var note = Pokemon(
         name: pok.name,
         url: pok.url,
+        logoUri: pok.logoUri,
       );
       pokemonsDB.add(note);
     }
@@ -25,10 +27,12 @@ class PokemonsRepository {
     PokemonsEntityCompanion entity = PokemonsEntityCompanion(
       name: drift.Value(note.name.toString()),
       url: drift.Value(note.url.toString()),
+      logoUrl: drift.Value(note.logoUri.toString()),
     );
     var pok = Pokemon(
       name: note.name,
       url: note.url,
+      logoUri: note.logoUri,
     );
     await dependency<AppDb>().insertLocalPokemon(entity);
     log(pok.toString());
