@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
 import 'package:flutter_pokemon_application_test/BLoC/2.event.dart';
 import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
+import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
 import 'package:flutter_pokemon_application_test/Repository/1.repository.dart';
 import 'package:flutter_pokemon_application_test/Widgets/detailed_page.dart';
 
@@ -43,7 +44,7 @@ class _MainHomePageState extends State<MainHomePage> {
               );
             }
             if (state is PokemonLoadedState) {
-              return const PokemonsGrid();
+              return PokemonsGrid(list: state.list);
             }
             if (state is PokemonErrorState) {
               return Center(

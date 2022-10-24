@@ -1,3 +1,3 @@
 class Constants {
-  String api = 'https://pokeapi.co/api/v2/pokemon';
+  final String api = 'https://pokeapi.co/api/v2/pokemon';
 }

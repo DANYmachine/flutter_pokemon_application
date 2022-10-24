@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -7,18 +9,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../BLoC/1.bloc.dart';
 import '../BLoC/2.event.dart';
 import '../DI/1.dependencies.dart';
+import '../Model/1.pokemon.dart';
 import '../Repository/1.repository.dart';
 import 'detailed_page.dart';
 
 class PokemonsGrid extends StatefulWidget {
-  const PokemonsGrid({super.key});
+  final List<Pokemon> list;
+  const PokemonsGrid({super.key, required this.list});
 
   @override
   State<PokemonsGrid> createState() => _PokemonsGridState();
 }
 
 class _PokemonsGridState extends State<PokemonsGrid> {
+  final itemKey = GlobalKey();
   late PokemonBloc _bloc;
+
+  Future scrollToItem() async {
+    final context = itemKey.currentContext!;
+    await Scrollable.ensureVisible(
+      context,
+      duration: Duration(milliseconds: 300),
+    );
+  }
+
   @override
   void didChangeDependencies() {
     _bloc = BlocProvider.of<PokemonBloc>(context);
@@ -33,6 +47,10 @@ class _PokemonsGridState extends State<PokemonsGrid> {
       ),
       itemCount: dependency<PokemonsRepository>().pokemons.length,
       itemBuilder: (context, index) {
+        log(index.toString());
+        if (index == dependency<PokemonsRepository>().pokemons.length - 1) {
+          _bloc.add(LoadMoreEvent());
+        }
         return Container(
           height: 150,
           padding: const EdgeInsets.all(15),

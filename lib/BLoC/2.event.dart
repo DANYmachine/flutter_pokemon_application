@@ -8,3 +8,5 @@ class DetailedEvent extends PokemonEvent {
   late Pokemon pokemon;
   DetailedEvent({required this.pokemon});
 }
+
+class LoadMoreEvent extends PokemonEvent {}

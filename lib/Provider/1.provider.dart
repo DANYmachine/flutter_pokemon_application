@@ -10,11 +10,11 @@ class Provider {
 
   final _rep = dependency<PokemonsRepository>();
 
-  Future getInfo() async {
-    _rep.pokemons = await _rep.getPokemonsList();
+  Future getInfo(String api) async {
+    //_rep.pokemons = await _rep.getPokemonsList();
     //_rep.pokemons = [];
 
-    if (_rep.pokemons.isEmpty) {
+    /*if (_rep.pokemons.isEmpty) {
       log('DB doesn' 't exist. Creating DB');
       final res = await dependency<Helper>().httpHelper(_api);
 
@@ -27,14 +27,39 @@ class Provider {
           logoUri: res2['sprites']['front_default'],
         );
 
-        await _rep.addNewPokemon(pok);
-        //_rep.pokemons.add(pok);
+        //await _rep.addNewPokemon(pok);
+        _rep.pokemons.add(pok);
       }
+    }*/
+
+    final res = await dependency<Helper>().httpHelper(api);
+
+    for (var pk in res['results']) {
+      String n = dependency<Helper>().firstToUpper(pk['name']);
+      var res2 = await dependency<Helper>().httpHelper(pk['url']);
+      var pok = Pokemon(
+        name: n,
+        url: pk['url'],
+        logoUri: res2['sprites']['front_default'],
+      );
+
+      //await _rep.addNewPokemon(pok);
+      _rep.pokemons.add(pok);
     }
 
     /*for (var pk in _rep.pokemons) {
       log(pk.toString());
     }*/
+  }
+
+  Future loadNext() async {
+    String bufApi = _api;
+    var res = await dependency<Helper>().httpHelper(bufApi);
+    bufApi = res['next'];
+    log(bufApi);
+    res = await dependency<Helper>().httpHelper(bufApi);
+    _api = bufApi;
+    await getInfo(bufApi);
   }
 
   Future getDetails(Pokemon pokemon) async {

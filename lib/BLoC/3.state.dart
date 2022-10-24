@@ -8,7 +8,10 @@ class PokemonEmptyState extends PokemonState {}
 
 class PokemonLoadingState extends PokemonState {}
 
-class PokemonLoadedState extends PokemonState {}
+class PokemonLoadedState extends PokemonState {
+  List<Pokemon> list;
+  PokemonLoadedState({required this.list});
+}
 
 class PokemonErrorState extends PokemonState {}
 
