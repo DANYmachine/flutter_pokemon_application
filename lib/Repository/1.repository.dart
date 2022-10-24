@@ -11,16 +11,16 @@ class PokemonsRepository {
   List<Pokemon> pokemonsDB = [];
 
   Future<List<Pokemon>> getPokemonsList() async {
-    pokemonsDB = [];
+    pokemons = [];
     for (var pok in await dependency<AppDb>().getPokemonsListFromDB()) {
       var note = Pokemon(
         name: pok.name,
         url: pok.url,
         logoUri: pok.logoUri,
       );
-      pokemonsDB.add(note);
+      pokemons.add(note);
     }
-    return pokemonsDB;
+    return pokemons;
   }
 
   Future<void> addNewPokemon(Pokemon note) async {
