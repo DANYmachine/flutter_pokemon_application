@@ -5,7 +5,7 @@ import '../bloc/bloc.dart';
 import '../bloc/event.dart';
 import '../../../locator_service.dart';
 import '../../data/models/pokemon.dart';
-import '../../data/repositories/pokemon_repository.dart';
+import '../../data/repositories/pokemon_repository_impl.dart';
 import '../Pages/detailed_page.dart';
 
 class PokemonsGrid extends StatefulWidget {

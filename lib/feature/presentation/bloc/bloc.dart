@@ -15,7 +15,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
       emit(PokemonLoadingState());
       log(state.toString());
       try {
-        await _provider.getInfo(_const.api);
+        await _provider.getInfo();
         emit(
           PokemonLoadedState(),
         );
@@ -27,7 +27,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     on<LoadMoreEvent>((event, emit) async {
       try {
         log('Loading more data');
-        await _provider.loadNext();
+        await _provider.getInfo();
         emit(
           PokemonLoadedState(),
         );

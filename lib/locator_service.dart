@@ -2,7 +2,7 @@ import 'package:flutter_pokemon_application_test/feature/presentation/bloc/bloc.
 import 'package:flutter_pokemon_application_test/common/constants.dart';
 import 'package:flutter_pokemon_application_test/common/helper.dart';
 import 'package:flutter_pokemon_application_test/feature/data/datasources/remote/provider.dart';
-import 'package:flutter_pokemon_application_test/feature/data/repositories/pokemon_repository.dart';
+import 'package:flutter_pokemon_application_test/feature/data/repositories/pokemon_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'feature/data/datasources/local/app_db.dart';
 

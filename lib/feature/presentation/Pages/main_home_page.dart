@@ -4,7 +4,7 @@ import 'package:flutter_pokemon_application_test/common/app_colors.dart';
 import 'package:flutter_pokemon_application_test/feature/presentation/bloc/bloc.dart';
 import 'package:flutter_pokemon_application_test/feature/presentation/bloc/event.dart';
 import 'package:flutter_pokemon_application_test/locator_service.dart';
-import 'package:flutter_pokemon_application_test/feature/data/repositories/pokemon_repository.dart';
+import 'package:flutter_pokemon_application_test/feature/data/repositories/pokemon_repository_impl.dart';
 import '../Widgets/loading_indicator.dart';
 import '../bloc/state.dart';
 import '../Widgets/error_widget.dart';
