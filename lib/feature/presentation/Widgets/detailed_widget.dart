@@ -1,12 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../BLoC/1.bloc.dart';
-import '../Model/1.pokemon.dart';
+import '../../data/models/pokemon.dart';
 
 class DetailedWidget extends StatefulWidget {
   final Pokemon pokemon;
@@ -17,21 +11,14 @@ class DetailedWidget extends StatefulWidget {
 }
 
 class _DetailedWidgetState extends State<DetailedWidget> {
-  late PokemonBloc _bloc;
-  @override
-  void didChangeDependencies() {
-    _bloc = BlocProvider.of<PokemonBloc>(context);
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
       child: Material(
         borderRadius: BorderRadius.circular(30),
         elevation: 15,
-        color: Color.fromARGB(255, 255, 255, 135),
+        color: const Color.fromARGB(255, 255, 255, 135),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +30,7 @@ class _DetailedWidgetState extends State<DetailedWidget> {
                 elevation: 30,
                 borderRadius: BorderRadius.circular(30),
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   height: 200,
                   width: 200,
                   child: SvgPicture.network('${widget.pokemon.imgUri}'),
@@ -53,7 +40,7 @@ class _DetailedWidgetState extends State<DetailedWidget> {
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -63,7 +50,7 @@ class _DetailedWidgetState extends State<DetailedWidget> {
                       elevation: 5,
                       borderRadius: BorderRadius.circular(30),
                       child: Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         width: 300,
                         child: Text(
                           'Name:\t${widget.pokemon.name}',
@@ -81,7 +68,7 @@ class _DetailedWidgetState extends State<DetailedWidget> {
                       elevation: 5,
                       borderRadius: BorderRadius.circular(30),
                       child: Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         width: 200,
                         child: Column(children: [
                           Text('Height:\t${widget.pokemon.height}\tcm'),

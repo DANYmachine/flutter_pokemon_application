@@ -1,4 +1,4 @@
-import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
+import 'package:flutter_pokemon_application_test/feature/data/models/pokemon.dart';
 
 abstract class PokemonEvent {}
 

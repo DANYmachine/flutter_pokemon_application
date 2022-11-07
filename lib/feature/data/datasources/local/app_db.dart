@@ -2,13 +2,13 @@
 
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
+import 'package:flutter_pokemon_application_test/feature/data/models/pokemon.dart';
 import 'package:path/path.dart' as path;
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../Model/2.entity.dart';
+import '../../models/entity.dart';
 
 part 'app_db.g.dart';
 

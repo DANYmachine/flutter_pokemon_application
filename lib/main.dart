@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pokemon_application_test/BLoC/1.bloc.dart';
-import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
-
-import 'Widgets/main_widget.dart';
+import 'package:flutter_pokemon_application_test/feature/presentation/bloc/bloc.dart';
+import 'package:flutter_pokemon_application_test/locator_service.dart' as di;
+import 'common/app_colors.dart';
+import 'locator_service.dart';
+import 'feature/presentation/Pages/main_home_page.dart';
 
 void main() async {
-  initGetIt();
+  await di.initGetIt();
   runApp(const MyApp());
 }
 
@@ -16,9 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        backgroundColor: AppColors.mainBackground,
+        scaffoldBackgroundColor: AppColors.cellBackground,
+      ),
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
-        create: (_) => dependency<PokemonBloc>(),
+        create: (_) => sl<PokemonBloc>(),
         child: const MainHomePage(),
       ),
     );

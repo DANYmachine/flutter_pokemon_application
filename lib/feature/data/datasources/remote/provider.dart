@@ -1,14 +1,14 @@
 import 'dart:developer';
-import 'package:flutter_pokemon_application_test/DI/1.dependencies.dart';
-import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
-import 'package:flutter_pokemon_application_test/Repository/1.repository.dart';
+import 'package:flutter_pokemon_application_test/locator_service.dart';
+import 'package:flutter_pokemon_application_test/feature/data/models/pokemon.dart';
+import 'package:flutter_pokemon_application_test/feature/data/repositories/pokemon_repository.dart';
 
-import '../Helper/helper.dart';
+import '../../../../common/helper.dart';
 
 class Provider {
   String _api = 'https://pokeapi.co/api/v2/pokemon';
 
-  final _rep = dependency<PokemonsRepository>();
+  final _rep = sl<PokemonsRepository>();
 
   Future getInfo(String api) async {
     //_rep.pokemons = await _rep.getPokemonsList();
@@ -32,11 +32,11 @@ class Provider {
       }
     }*/
 
-    final res = await dependency<Helper>().httpHelper(api);
+    final res = await sl<Helper>().httpHelper(api);
 
     for (var pk in res['results']) {
-      String n = dependency<Helper>().firstToUpper(pk['name']);
-      var res2 = await dependency<Helper>().httpHelper(pk['url']);
+      String n = sl<Helper>().firstToUpper(pk['name']);
+      var res2 = await sl<Helper>().httpHelper(pk['url']);
       var pok = Pokemon(
         name: n,
         url: pk['url'],
@@ -54,22 +54,22 @@ class Provider {
 
   Future loadNext() async {
     String bufApi = _api;
-    var res = await dependency<Helper>().httpHelper(bufApi);
+    var res = await sl<Helper>().httpHelper(bufApi);
     bufApi = res['next'];
     log(bufApi);
-    res = await dependency<Helper>().httpHelper(bufApi);
+    res = await sl<Helper>().httpHelper(bufApi);
     _api = bufApi;
     await getInfo(bufApi);
   }
 
   Future getDetails(Pokemon pokemon) async {
-    var res = await dependency<Helper>().httpHelper(pokemon.url!);
+    var res = await sl<Helper>().httpHelper(pokemon.url!);
     pokemon.types = [];
     pokemon.height = res['height'];
     pokemon.weight = res['weight'];
 
     for (var tp in res['types']) {
-      String n = dependency<Helper>().firstToUpper(tp['type']['name']);
+      String n = sl<Helper>().firstToUpper(tp['type']['name']);
 
       pokemon.types.add(n);
       log(pokemon.types.length.toString());

@@ -1,17 +1,12 @@
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../BLoC/1.bloc.dart';
-import '../BLoC/2.event.dart';
-import '../DI/1.dependencies.dart';
-import '../Model/1.pokemon.dart';
-import '../Repository/1.repository.dart';
-import 'detailed_page.dart';
+import '../bloc/bloc.dart';
+import '../bloc/event.dart';
+import '../../../locator_service.dart';
+import '../../data/models/pokemon.dart';
+import '../../data/repositories/pokemon_repository.dart';
+import '../Pages/detailed_page.dart';
 
 class PokemonsGrid extends StatefulWidget {
   final List<Pokemon> list;
@@ -22,16 +17,8 @@ class PokemonsGrid extends StatefulWidget {
 }
 
 class _PokemonsGridState extends State<PokemonsGrid> {
-  final itemKey = GlobalKey();
   late PokemonBloc _bloc;
-
-  Future scrollToItem() async {
-    final context = itemKey.currentContext!;
-    await Scrollable.ensureVisible(
-      context,
-      duration: Duration(milliseconds: 300),
-    );
-  }
+  final _rep = sl.get<PokemonsRepository>();
 
   @override
   void didChangeDependencies() {
@@ -45,10 +32,10 @@ class _PokemonsGridState extends State<PokemonsGrid> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
-      itemCount: dependency<PokemonsRepository>().pokemons.length,
+      itemCount: _rep.pokemons.length,
       itemBuilder: (context, index) {
         log(index.toString());
-        if (index == dependency<PokemonsRepository>().pokemons.length - 1) {
+        if (index == _rep.pokemons.length - 1) {
           _bloc.add(LoadMoreEvent());
         }
         return Container(
@@ -63,26 +50,21 @@ class _PokemonsGridState extends State<PokemonsGrid> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => BlocProvider(
-                      create: (_) => dependency<PokemonBloc>(),
+                      create: (_) => sl<PokemonBloc>(),
                       child: DetailedPage(
-                        pokemon:
-                            dependency<PokemonsRepository>().pokemons[index],
+                        pokemon: _rep.pokemons[index],
                       ),
                     ),
                   ),
-                ); //.then((value) => _bloc.add(PokemonInitEvent()));
+                );
               },
               child: GridTile(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.network(
-                        '${dependency<PokemonsRepository>().pokemons[index].logoUri}'),
+                    Image.network('${_rep.pokemons[index].logoUri}'),
                     Text(
-                      dependency<PokemonsRepository>()
-                          .pokemons[index]
-                          .name
-                          .toString(),
+                      _rep.pokemons[index].name.toString(),
                       textAlign: TextAlign.center,
                     ),
                   ],

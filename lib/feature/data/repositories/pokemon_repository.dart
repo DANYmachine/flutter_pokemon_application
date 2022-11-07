@@ -1,10 +1,8 @@
 import 'dart:developer';
 import 'package:drift/drift.dart' as drift;
-import 'package:flutter_pokemon_application_test/Helper/helper.dart';
-import 'package:flutter_pokemon_application_test/Model/1.pokemon.dart';
-
-import '../DI/1.dependencies.dart';
-import '../Drift DB/app_db.dart';
+import 'package:flutter_pokemon_application_test/feature/data/models/pokemon.dart';
+import '../../../locator_service.dart';
+import '../datasources/local/app_db.dart';
 
 class PokemonsRepository {
   List<Pokemon> pokemons = [];
@@ -12,7 +10,7 @@ class PokemonsRepository {
 
   Future<List<Pokemon>> getPokemonsList() async {
     pokemons = [];
-    for (var pok in await dependency<AppDb>().getPokemonsListFromDB()) {
+    for (var pok in await sl<AppDb>().getPokemonsListFromDB()) {
       var note = Pokemon(
         name: pok.name,
         url: pok.url,
@@ -34,13 +32,13 @@ class PokemonsRepository {
       url: note.url,
       logoUri: note.logoUri,
     );
-    await dependency<AppDb>().insertLocalPokemon(entity);
+    await sl<AppDb>().insertLocalPokemon(entity);
     log(pok.toString());
     await getPokemonsList();
   }
 
   Future<void> deleteCity(int id) async {
-    await dependency<AppDb>().deleteLocalPokemon(id);
+    await sl<AppDb>().deleteLocalPokemon(id);
     await getPokemonsList();
   }
 }
