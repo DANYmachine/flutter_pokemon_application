@@ -11,6 +11,7 @@ import 'locator_service.dart';
 import 'feature/presentation/Pages/main_home_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await di.initGetIt();
   sl<PokemonsRepository>().pokemons = await sl<AppDb>().getPokemonsListFromDB();
   log('${sl<PokemonsRepository>().pokemons.length}');
